@@ -1,4 +1,7 @@
 import Character from '../character';
+import Zombie from '../zombie';
+import Bowman from '../bowman';
+import Undead from '../undead';
 
 test(('class Character'), () => {
   const name = 'character1';
@@ -9,8 +12,8 @@ test(('class Character'), () => {
     health: 100,
     level: 1,
   };
-  const zomb = new Character(name, type);
-  expect(zomb).toEqual(expected);
+  const character = new Character(name, type);
+  expect(character).toEqual(expected);
 });
 
 test(('class Character wrong name'), () => {
@@ -18,5 +21,50 @@ test(('class Character wrong name'), () => {
 });
 
 test(('class Character wrong type'), () => {
-  expect(() => new Character('boom', 'Krys')).toThrow('This type Krys is wrong');
+  expect(() => new Character('char', 'boomer')).toThrow('This type boomer is wrong');
+});
+
+test(('class Character method -> levelUp()'), () => {
+  const name = 'Character';
+  const expected = {
+    name,
+    type: 'Bowman',
+    health: 100,
+    level: 2,
+    attack: 25 * 1.2,
+    defense: 25 * 1.2,
+  };
+  const bowman = new Bowman(name);
+  bowman.levelUp();
+  expect(bowman).toEqual(expected);
+});
+
+test(('class Character -> wrong method levelUp()'), () => {
+  const name = 'Character';
+  const zomb = new Zombie(name);
+  zomb.health = 0;
+  expect(() => zomb.levelUp()).toThrow('You are dead');
+});
+
+test(('class Character method -> damage(points)'), () => {
+  const name = 'Undead';
+  const expected = {
+    name,
+    type: 'Undead',
+    health: 62.5,
+    level: 1,
+    attack: 25,
+    defense: 25,
+  };
+  const undead = new Undead(name);
+  undead.damage(50);
+  expect(undead).toEqual(expected);
+});
+
+test(('class Character method damage(points) health = 0'), () => {
+  const name = 'Undead';
+  const undead = new Undead(name);
+  undead.health = 0;
+  undead.damage(12);
+  expect(undead.health).toBe(0);
 });
