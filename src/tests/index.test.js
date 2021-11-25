@@ -1,15 +1,40 @@
-import orderByProps from '../index';
+import destruct from '../index';
 
-test(('function orderByProps'), () => {
-  const object = {
-    name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
+test(('function destruct'), () => {
+  const obj = {
+    name: 'Лучник',
+    type: 'Bowman',
+    health: 50,
+    level: 3,
+    attack: 40,
+    defence: 10,
+    special: [
+      {
+        id: 8,
+        name: 'Двойной выстрел',
+        icon: 'http://...',
+        description: 'Двойной выстрел наносит двойной урон',
+      },
+      {
+        id: 9,
+        name: 'Нокаутирующий удар',
+        icon: 'http://...',
+      },
+    ],
   };
   const expected = [
-    { key: 'defence', value: 40 },
-    { key: 'health', value: 10 },
-    { key: 'attack', value: 80 },
-    { key: 'level', value: 2 },
-    { key: 'name', value: 'мечник' },
+    {
+      id: 8,
+      name: 'Двойной выстрел',
+      icon: 'http://...',
+      description: 'Двойной выстрел наносит двойной урон',
+    },
+    {
+      id: 9,
+      name: 'Нокаутирующий удар',
+      icon: 'http://...',
+      description: 'Описание недоступно',
+    },
   ];
-  expect(orderByProps(object, ['defence', 'health'])).toEqual(expected);
+  expect(destruct(obj)).toEqual(expected);
 });
